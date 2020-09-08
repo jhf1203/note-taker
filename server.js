@@ -36,9 +36,9 @@ app.post("/api/notes", function(req, res) {
     res.json(localJson);
   });
 
-fs.appendFile("../db.json", JSON.stringify(noteArr), function(err){
-  if (err) console.log(err);
-})
+// fs.appendFile("../db.json", JSON.stringify(noteArr), function(err){
+//   if (err) console.log(err);
+// })
 
 // Listening
 app.listen(PORT, function() {

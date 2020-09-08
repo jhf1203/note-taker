@@ -33,7 +33,7 @@ const noteArr = [];
 
 app.post("/api/notes", function(req, res) {
     noteArr.push(req.body);
-    res.json(true);
+    res.json(localJson);
   });
 
 fs.appendFile("../db.json", JSON.stringify(noteArr), function(err){

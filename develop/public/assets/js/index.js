@@ -6,7 +6,7 @@ const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
-let noteID = 0;
+let noteID = 1;
 
 // A function for getting all notes from the db
 const getNotes = () => {
@@ -109,7 +109,7 @@ const renderNoteList = (notes) => {
   $noteList.empty();
 
   const noteListItems = [];
-
+  console.log(notes);
   // Returns jquery object for li with given text and delete button
   // unless withDeleteButton argument is provided as false
   const create$li = (text, withDeleteButton = true) => {

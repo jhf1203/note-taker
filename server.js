@@ -15,11 +15,6 @@ const PORT = process.env.PORT || 8000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const notes = (readFileAsync("./develop/db/db.json")).then(function(err, data) {
-  console.log("data" + data);
-})
-console.log("notes array" + (notes));
-
 
 // Static Middleware
 app.use(express.static("./develop/public"));
@@ -27,34 +22,41 @@ app.use(express.static("./develop/public"));
 
 // API Routes
 app.get("/api/notes", function(req, res) {
-  res.json(localJson);
+  readFileAsync("./develop/db/db.json", "utf8").then(function(data) {
+      notes = [].concat(JSON.parse(data))
+      res.json(notes);
+    })
 }); 
 
 app.post("/api/notes", function(req, res) {
-    let notes;
+    const note = req.body;
     readFileAsync("./develop/db/db.json", "utf8").then(function(data) {
-      notes = [].concat(JSON.parse(data))
-      console.log("notes" + notes);
-      notes.push(req.body);
-      console.log("notes after pushing: ",  notes);
-      return req.body
-    }).then(function(note) {
+      const notes = [].concat(JSON.parse(data));
+      note.id = notes.length + 1
+      notes.push(note);
+      return notes
+    }).then(function(notes) {
       writeFileAsync("./develop/db/db.json", JSON.stringify(notes))
-      return note
-    }).then(function() { 
       res.json(note);
-    })  
+    })
+});
 
-  
-  // notes.push(req.body);
-    // writeFileAsync("./develop/db/db.json", JSON.stringify(notes), function(err){
-    //   if (err) console.log(err);
-    //   console.log("post req, here is reqbody: " + req.body + "and here is notearr: " + notes);
-
-    // })
-    // res.json(true);
-  });
-
+app.delete("/api/notes/:id", function(req, res) {
+  const idToDelete = parseInt(req.params.id);
+  readFileAsync("./develop/db/db.json", "utf8").then(function(data) {
+    const notes = [].concat(JSON.parse(data));
+    const newNotesData = []
+    for (let i = 0; i<notes.length; i++) {
+      if(idToDelete !== notes[i].id) {
+        newNotesData.push(notes[i])
+      }
+    }
+    return newNotesData
+  }).then(function(notes) {
+    writeFileAsync("./develop/db/db.json", JSON.stringify(notes))
+    res.send('saved success!!!');
+  })
+})
 
 // HTML Routes
 app.get("/notes", function(req, res) {
@@ -68,11 +70,6 @@ app.get("/", function(req, res) {
   app.get("*", function(req, res) {
     res.sendFile(path.join(__dirname, "./develop/public/index.html"));
  });
-
-
-
-
-
 
 // Listening
 app.listen(PORT, function() {

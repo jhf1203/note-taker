@@ -39,8 +39,8 @@ Use of the note taker application has simplicity and functionality in mind.  To 
 
 #### Usage Demonstration
 
-[User Functionality Demonstration](https://www.youtube.com/watch?v=TbPuddYvspk&t=8s)
-[Code Walkthrough](https://www.youtube.com/watch?v=SyiL0J80gDQ)
+- [User Functionality Demonstration](https://www.youtube.com/watch?v=TbPuddYvspk&t=8s)
+- [Code Walkthrough](https://www.youtube.com/watch?v=SyiL0J80gDQ)
   
 _________________________________
   

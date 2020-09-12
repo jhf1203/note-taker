@@ -4,9 +4,11 @@ const path = require("path");
 const fs = require("fs");
 const util = require("util");
 
+
 // Handling Asynchronous Processes
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
+
 
 // Setting Up Server
 const app = express();
@@ -28,6 +30,7 @@ app.get("/api/notes", function(req, res) {
     })
 }); 
 
+
 // API Route | "POST" request
 app.post("/api/notes", function(req, res) {
     const note = req.body;
@@ -41,6 +44,7 @@ app.post("/api/notes", function(req, res) {
       res.json(note);
     })
 });
+
 
 // API Route | "DELETE" request
 app.delete("/api/notes/:id", function(req, res) {
